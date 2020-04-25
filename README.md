@@ -1,113 +1,83 @@
-# ethereum-push-notification-system
-Protocol for Push notifications for Ethereum (EPNS)
+# EPNS (Ethereum Push Notification System)
+The EPNS protocol is a way to send notifications out to users of different dApps (or potentially all users of Ethereum itself) via Web, Mobile (push notifications) or Web3 Providers.
 
-# What are the benefits of having this push notification system on Ethereum?
+EPNS App Owners can send mass unencrypted notifications (all users in their specific app group), or encrypted targetted messages to a specific user of their app group.
 
-I see a ton of benefits with the EPNS (Ethereum Push Notification System), both for Ethereum and for third party solidity projects, some of which are:
+# What are the benefits of having EPNS?
+Idea behind EPNS is to expand on and integrate existing ways by which a user can be reached out to by different dApp owners, smart contracts, etc. The EPNS service can be used in a variety of ways:
 
-I am aiming for EPNS to have the ability to differentiate between groups so we can have groups like all ethereum miners, all ethereum active users, custom opt-in groups, etc, etc
-
-## For Ethereum:
-- Ethereum can send out notifications to all active addresses in case an important message needs to be delivered or a critical info needs to be broadcasted. For example, when Ethereum 2.0 launches.
-
-- Ethereum can send out notifications to miners whenever a fork takes place.
-
-- Ethereum can send out notifications to exchanges regarding stolen funds so that action against them can be taken (optional protocol method which can be used to block funds if we extend the protocol in that way).
-
-- Since EPNS system will have the feature to send push notifications not only on behalf of Ethereum but also on behalf of third party projects on Ethereum (both of which I will term as apps for information written below). it can also act as a way to monetize the EPNS system when it's used by third party.
-
-- There will be a distinction on what party is sending the message to ensure users are never confused about the authenticity of the message and from which app it has been originated from.
-
-## For Third Party Projects on Ethereum:
-
-- Third Party projects can use EPNS to target either the default groups (Like All Active Users, Miners, etc) or form their own group of addresses (custom opt-in groups) to which they can broadcast their message.
-
-- Example can be when an ICO is conducted or a new cryptocurrency is launched, instead of these projects relying on emails to store and communicate about their updates, they can instead offer EPNS service which is anonymized and doesn't have a central point of failure.
-
-- They can also use it to communicate to users on major events or milestones, if need be.
+- It can be used to relay important loan liquidation, funds running out, debt positions notifices to a specific user in #DeFi
+- It can be used to inform users of important upcoming events, notifications, etc of specific dApps (via App Owners)
+- It can be further enhanced to convey push notifications that act as security mechanisms (for example: a Trusted App Owner group is subscribed by all exchanges, the addresses relayed by this app owner in specific format can automatically blacklist those addresses out)
+- It can potentially be used by Ethereum itself for major announcements like launching of Ethereum 2.0, notifications to miners for any upcoming fork, etc
+- It can potentially replace the way new projects gather user's sensitive information. For Example, when an ICO is conducted or a new cryptocurrency is launched, instead of these projects relying on emails to store and communicate about their updates, they can instead offer EPNS service which is anonymized and doesn't have a central point of failure.
 
 # Technical Details
-The way I see this project is it to have the following major components and phases. Of course, this is just the initial phase so things might require major or minor tweaking moving forward, also some parts might seem crude right now:
+Following definitions are used in the rest of the spec to refer to a particular category or demography of the users of the protocol.
 
-The EPNS system works very similar to mobile push notification system. The project owners can communicate with the demography of their users by sending messages out to them.
+### Definitions
+| Term  | Description |
+| ------------- | ------------- |
+| Contract Owner  | The owner of the contract, specifically the address by which the contract is deployed |
+| App Owner | The third party projects, dApps or smart contract, specifically the address which forms their identity as well as the custom opt-in group which the subscribed users will recieve message from |
+| Users | All the users who don't fall in either of the above category |
+| App Owner Group | The group which contains subscribed users of a particular App Owner |
+| Subscribed Users | The users who have subscribed to a specific App Owner Group |
 
-## EPNS Protocol (Smart Contract):
+### Game Theory
+Inorder to ensure the proper participation of all players, following game theory is proposed, features marked with indentation will mostly be excluded from MVP:
+- The **contract owner** doesn't have any ability to send message on behalf of **app owners**
+- > The **app owners** might spoof other trusted apps and thus will have to be verified or a spam system developed so that users can mark them as spoof or a similar mechanism
+- The **app owners** need explicit permission from the **users** before messages can be sent to them
+- The **app owners** need to stake some minimum DAI to ensure spam free environment, this is going to be minimal but good enough to ascertain good behavior (for example: 50 DAI)
+- The **users** need to transact on blockchain to specifically subscribe or unsubscribe to an **app owner group**, this leads to an incentive issue, ie: why would a user spend gas in most cases?
+- To counter this, The staked DAI from **app owners** can inturn be used as a incentive for **users** to subscribe to the specific **app owner** group
+- This can be done by using service like [**AAVE**](https://app.aave.com/deposit/DAI) to accure interest on the said DAI and distribute it to the subscribed **users** group
+- This incentivizes the **users** to spend gas to perform transaction operation of subscribe
+- The **app owners** can stake more DAI if they want to, since the **users** are incentivized to subscribe
+- > The **app owner** can blacklist a certain **user** from their group if they want to
+- The **app owners** can reclaim this DAI back, reclaiming this DAI will also destroy the **app owner group**, a fees of 10 DAI will also be held back for the **contract owner**, the fees is small enough for serious players to not worry about but will act as a further deterrent for bad players
 
-- I see the EPNS Protocol to be a smart contract as of now, this smart contract will in essence act as a storage for all the messages and other meta, mapping info to be stored which can be retrieved by third party web3 providers to display.
+### Features
+EPNS should be able to:
+- Provide function for dApp or Smart Contract to register itself as **app owner**
+- The **app owner** needs to upload their profile in a json format to IPFS, this will contain their name and icon at the beginning, this json file hash is stored on-chain and fetched and shown along with the message they send
+- The **users** can subscribe to multiple **app owner group** through their own action
+- The **subscribed users** can unsubscribe from an **app owner group** through their own action
+- The **app owner** can send messages to their **subscribed users**
+- The messages sent from **app owner** can also indicate if they want to use push notification service of [epns.io](https://epns.io).
+- A small fee will be charged for using the service for push notification
+- To ensure that push notification service usage is done after paying the fee, the message will be emitted with a flag
+- The **app owner** can send unencrypted message to their **app owner group** in which case the message will reach every **subscribed users**
+- The **app owner** can also send encrypted message to specific **subscribed user** in which case the message will be encrypted with the specific user's public key
+- In the encrypted message scenario, the user private key will be used to decrypt the message, this means that the mobile app needs to store the private key of the user wallet which will be done in a safe and secure way. The private key in any case will never leave the user's device
+- The web3 provider can also use a similar mechanism to display notifications to the users in the future
+- The **app owner** message is to be stored in the JSON file on [ipfs](https://ipfs.io/) and the hash of that will be mapped. this will be interpreted by the server handling push notifications and also by any web3 providers who wants to use the service
+- > The JSON file will carry msg type ids which can ensure that the system can be extended beyond the ecosystem, ie: for having a trusted **app owner** with exchanges and **subscribed users** that can monitor and lock down blacklisted wallets automatically in the future.
 
-- The Protocol will have the following functions:
+### Proposed Structure
+**Proposed App Owner JSON File Format**
+| Name  | Type | Description |
+| ------------- | ------------- | ------------- |
+| name | *string* | The name of the app to be displayed |
+| icon | *base64* | 128x128 icon to be associated with the app |
 
-	- It allows the apps to send messages to certain groups of their choice, the mapping and tech specs needs to be brainstormed.
+**Proposed message JSON File Format**
+| Name  | Type | Description |
+| ------------- | ------------- | ------------- |
+| type | *Integer* | The message type, currently will be 1 indicating normal message |
+| title | *String* | The title of the message |
+| message | *String* | The message |
+| encrypted | *Bool* | message is encrpted or not |
 
-	- It allows users (or address owners) to blacklist certain apps if they don't want to receive the messages from them.
+### Tech Spec
+EPNS system needs to deal with the following to allow **specific, user permissioned messaging from different custom opt-in groups created by app owners**:
 
-	- For the app owners (except for Ethereum), the cost of sending a message should be calculated as gas fees + some fees which goes to Ethereum.
+- Creation of App Owners (dApp Owners, Smart Contracts, etc that want to send message)
+- Storage of Message
+- User Subscription to Groups
+- Broadcasting of Message
+-- Via EPNS Push Notification Mobile App
+-- Via Web3 Provider
 
-	- It needs to have a function by which the app owners can create or define their own group, this can be a subset of existing group or can be a new group on which the users can give their consent to be included. Kind of like how email addresses are collected for particular projects.
-
-	- This does lead to an issue where in the user might not want to spend gas to give their address to the third party apps, this can be mitigated by cooking logic in the smart contract which requests funds from the third party app itself when they create the group. This can be based on roughly the number of users who they expect to sign up (alternatively, we can have any other criteria that matches the business logic we want to follow). This fund can then be used as meta transaction on behalf of the users who opt in to these groups or want to opt out. Since this is not pure meta transaction in the valid sense, it can be that the user are refunded the gas fees back from the app owner's kitty on their action of subscribe or unsubscribe.
-
-- The EPNS protocol can then be used by the app owners to prepare a message according to the EPNS Message Protocol (outlined below) and then to post it out (or map it out) to the users of a particular group they want to target.
-
-- The EPNS groups are nothing but different demographics, which we will need to brainstorm on as to how to create predefined groups... for example, all ethereum addresses with at least one transaction can be deemed as active but how do we prepare and assign them? Should we create a centralized website to do that job, or a software which a user can download and prepare themself or somewhere in between.
-
-- The EPNS protocol owner would be the official Ethereum address, the messaging when initiated through this adress will ignore the fees portion while the messaging initiated through third party apps will include fees portion.
-
-### Some Pointers:
-
-- The apps (ethereum or third party) will need to register their account in this smart contract, this info can contain a link to their icon, the name of the app among other things... we will however need to vet this information in some way.
-
-- The message needs to be stored and perhaps mapped to all the addresses in the group, this will ensure gas utilization.
-
-- Need to figure out how to map the addresses of the group to the messages in an efficient and optimized way.
-
-## EPNS Message Protocol:
-
-- The EPNS message protocol can store information which is needed to be displayed to the user, such as:
-
-	- The message
-
-	- A Call to Action url
-
-	- Icon can be taken from the app owner meta
-
-	- An ID
-
-	- Other info to be brainstormed on as we further define the feature set
-
-- Any message which needs to be sent should be wrapped in this message protocol structure to ensure standardization
-
-## EPNS API:
-
-- Need to create a Javascript EPNS API to perform functions like registering an app owner, messaging, blacklisting function, how to ensure meta transaction, etc. 
-
-## EPNS Website:
-
-- The purpose of this EPNS website is for the potential app owners to come and register themselves on the smart contract and potentially use the website UI to message their users.
-
-- The website will provide an extremely intuitive UX for app owners to register, create messages and send them (or store them) in the EPNS protocol.
-
-- The website can also serve as a gateway for the users to come and blacklist certain app owners if they don't want to receive the notification from them.
-
-## EPNS Broadcasting:
-
-- This will require third party web3 providers (such as Metamask) to officially tap into our smart contract and read the notifications meant for a wallet address.
-
-- We will also need to roll out a protocol interpretation and documentation guide to tell them how to interpret our protocol and rules which they would need to follow to deliver the message to the user.
-
-- For example, they can maintain the id(or index) of all the messages which the users have read (and dismissed) and can poll the smart contract for messages later than that index and only display those... provided the message app owner is not blacklisted by the user.
-
-## EPNS Protocol Interpretation: 
-
-- This is the set of rules and endpoints which needs to be followed by web3 providers when they incorporate the EPNS system to ensure standardization and unification of user experience.
-
-
-Also, I do realize some of these pointers will need polishing... I am just conceptualizing all of this and how to make it work well :).
-
-I do see three key pointers which needs more work / brainstorming on:
-
-1. The mapping of address inside each groups - how to do it efficiently.
-
-2. Storing and mapping messages to users of these groups - should a software just sequentially transact on smart contract to write these values or is there a better, more efficient way.
-
-3. The web3 provider framework and how to encourage them to incorporate this once the system is built and is functioning well (or an alternative to it).
+### TBA

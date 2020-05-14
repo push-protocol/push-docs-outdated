@@ -24,6 +24,15 @@ Following definitions are used in the rest of the spec to refer to a particular 
 | App Owner Group | The group which contains subscribed users of a particular App Owner |
 | Subscribed Users | The users who have subscribed to a specific App Owner Group |
 
+For the purpose of explaining above EPNS terms, let's take the example of Youtube and the various associated roles. 
+| Term  | Description |
+| ------------- | ------------- |
+| Youtube | Contract Owner |
+| Channels| App Owner Groups |
+| Channel Owners | App Owners |
+| Users | Users |
+| Subscribed Users | Users subscribed to a specific App owner group |
+
 ### Game Theory
 Inorder to ensure the proper participation of all players, following game theory is proposed, features marked with indentation will mostly be excluded from MVP:
 - The **contract owner** doesn't have any ability to send message on behalf of **app owners**

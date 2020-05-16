@@ -1,7 +1,7 @@
 {
   "notification": {
     "title": "Your trade order [BTC-ETH] is filled!",
-    "body": "The intended message displayed on screen (150 Chars)",
+    "body": "The intended message displayed on screen (150 Chars)"
   },
   "data": {
     "type": "1",
@@ -10,5 +10,5 @@
     "amsg": "[d:Channels] represent your favorite [b:dApps] or [b:Smart Contracts]. You will often get notifications from different channels.\n\nThe [b:top section] of the message contains information about these channels.\n\n[b:Clicking on it] takes you to their [b:website].",
     "acta": "https://uniswap.exchange",
     "aimg": "https://aintviral.com/wp-content/uploads/2018/09/The-Haines-Shoe-House-Pennsylvania-IMG-1-TESTO-1-1024x712.jpg"
-  },
+  }
 }

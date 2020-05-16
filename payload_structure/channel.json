@@ -2,5 +2,5 @@
   "name": "Your Channel name (Limit: 40 Chars)",
   "info": "Short Description of your channel (Limit: 240 Chars)",
   "url": "Your Channel's website (Limit: 160 Chars)",
-  "icon": "Base64 encoded image (Limit 128x128) else server will reject",
+  "icon": "Base64 encoded image (Limit 128x128) else server will reject"
 }

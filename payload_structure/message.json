@@ -1,7 +1,7 @@
 {
   "notification": {
     "title": "The title of your message displayed on screen (35 Chars)",
-    "body": "The intended message displayed on screen (150 Chars)",
+    "body": "The intended message displayed on screen (150 Chars)"
   },
   "data": {
     "type": "1 or 2 or any other message type later invented... 1 is group message and 2 is secret message (1 or 2)",
@@ -10,5 +10,5 @@
     "amsg": "The intended message displayed inside app (500 Chars)",
     "acta": "[Empty for Optional] The cta link parsed inside the app",
     "aimg": "[Empty for Optional] The image url which is shown inside the app"
-  },
+  }
 }

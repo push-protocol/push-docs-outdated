@@ -66,9 +66,18 @@ EPNS should be able to:
 | Name  | Type | Description |
 | ------------- | ------------- | ------------- |
 | type | *Integer* | The message type, currently will be 1 indicating normal message |
+| payload | *json* | The Payload of the message |
+
+**Payload Type 1 - Normal Push Notification**
+| Name  | Type | Description |
+| ------------- | ------------- | ------------- |
 | title | *String* | The title of the message |
 | message | *String* | The message |
+| cta | *String (Url) (Optional)* | The link to perform call to action if any |
+| image | *String (Url) (Optional)* | To make the notification rich |
 | encrypted | *Bool* | message is encrpted or not |
+
+**Note:** The push notification icon will be taken from the App Owner Json Icon and will be displayed on the right side of the notification area for mobile.
 
 ### Tech Spec
 EPNS system needs to deal with the following to allow **specific, user permissioned messaging from different custom opt-in groups created by app owners**:

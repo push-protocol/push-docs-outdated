@@ -1,7 +1,13 @@
 # EPNS (Ethereum Push Notification System)
-The EPNS protocol is a way to send notifications out to users of different dApps (or potentially all users of Ethereum itself) via Web, Mobile (push notifications) or Web3 Providers.
+The EPNS protocol is the first of its kind way to send notifications out to users of different dApps (or potentially all users of Ethereum itself) via Web, Mobile (push notifications) or Web3 Providers.
 
 EPNS App Owners can send mass unencrypted notifications (all users in their specific app group), or encrypted targetted messages to a specific user of their app group.
+
+Slides:
+https://docs.google.com/presentation/d/1hweNz4QSDLdCVWKa3T8lw-ZwmhhDuPnhim-bgeUsIks/edit#slide=id.g85c3ec45e5_1_38
+
+Presentation:
+https://www.youtube.com/watch?v=uI-YhyUyMgw
 
 # What are the benefits of having EPNS?
 Idea behind EPNS is to expand on and integrate existing ways by which a user can be reached out to by different dApp owners, smart contracts, etc. The EPNS service can be used in a variety of ways:

@@ -1,4 +1,4 @@
-#Tenets
+# Tenets
 What we want to focus on, growing document.
 
 1. Security - Users need to be protected, their notifications (especially secrets) should be only accessible to them.

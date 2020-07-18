@@ -1,14 +1,12 @@
 ---
-description: >-
-  Workflow and working of sending notification via third party dApps /
-  serverless model
+description: Workflow for sending notification via third party dApps / serverless model
 ---
 
 # dApp / Serverless workflow
 
 ## Interacting with protocol via dApp / Serverless 
 
-EPNS allows various ways to integrate the protocol into your service. The following flow shows how a dApp can integrate to the protocol.
+EPNS allows various ways to integrate the protocol into your service. The following flow shows how a dApp can send notification to the protocol.
 
 ![Ethereum Push Notification Service \| dApp integration with protocol](../.gitbook/assets/inputdappserverless.png)
 

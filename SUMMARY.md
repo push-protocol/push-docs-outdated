@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Ethereum Push Notification Service](README.md)
+* [\[Outdated Page\]](README.md)
 * [Activating Service on Protocol](activating-service-on-protocol.md)
 * [Sending Notifications](sending-notifications/README.md)
   * [Notification Payload Types](sending-notifications/notification-payload-types.md)

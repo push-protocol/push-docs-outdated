@@ -2,7 +2,7 @@
 description: This page is outdated and in development
 ---
 
-# Ethereum Push Notification Service
+# \[Outdated Page\]
 
 {% hint style="danger" %}
 This page is outdated and in development

@@ -8,7 +8,7 @@ description: >-
 
 ## High Level Application Flow
 
-EPNS uses the following application flow to ensure storage, broadcasting and sending of notifications.
+EPNS uses the following application flow to ensure storage, broadcasting and sending the notifications out from.
 
 ![High Level Application Flow](../.gitbook/assets/highlevel.jpg)
 

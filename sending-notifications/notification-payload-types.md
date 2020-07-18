@@ -15,7 +15,7 @@ The JSON Payload can differ with payload types ensuring flexibility of the conte
 {% endhint %}
 
 {% hint style="info" %}
-Recommend to interface with **EPNS JS Library** for dApp / Serverless / Server flow to abstract the logic required to create notification payload.
+Recommended to interface with **EPNS JS Library** for dApp / Serverless / Server flow to abstract the logic required to create notification payload.
 {% endhint %}
 
 | Payload Variable | Description |
@@ -23,7 +23,7 @@ Recommend to interface with **EPNS JS Library** for dApp / Serverless / Server f
 | **notification**  | \[Required\] Represents the notification typically delivered on the home screen of the platform \(mobile, tablet, web, etc\), the icon of the channel is automatically added to outline where the notification is coming from. |
 | title | \[Required\] The title of the message displayed on the screen, this differs from the **data json** because the title while transforming the payload can be different than the title presented. For example, secret notification title are always transformed to say **Channel has sent you a secret notification.** |
 | body | \[Required\] The body of the message displayed on the screen, this differs from the **data json** because the title while transforming the payload can be different than the title presented. For example, secret notification body are always transformed to say **Please open the dApp / app to view your notification.** |
-| **data** | \[Optional\] The data present here forms the visual **feedBox** for the user. The data the notification will carry, this allows the notification to transform according the the payload type of the user and the content it carries on the frontend of the platform / app / dApp / wallet that want to support this feature. |
+| **data** | \[Optional\] The data present here forms the visual **feedBox** for the user. The data the notification will carry, this allows the notification to transform according the payload type of the user and the content it carries on the frontend of the platform / app / dApp / wallet that want to support this feature. |
 | type | \[Required\] Each payload has a type which tells how the data should be interpreted, this type is mirrored on the protocol function call as well.  |
 | secret | \[Optional\] is required for certain payload types to decrypt the data |
 | asub | \[Optional\] is the subject shown in the feed item |

@@ -1,10 +1,18 @@
-# README
+---
+description: This page is outdated and in development
+---
 
-## EPNS \(Ethereum Push Notification System\)
+# Ethereum Push Notification Service
 
-The EPNS protocol is the first of its kind way to send notifications out to users of different dApps \(or potentially all users of Ethereum itself\) via Web, Mobile \(push notifications\) or Web3 Providers.
+{% hint style="info" %}
+This page is outdated and in development
+{% endhint %}
 
-EPNS App Owners can send mass unencrypted notifications \(all users in their specific app group\), or encrypted targeted messages to a specific user of their app group.
+## EPNS \(Ethereum Push Notification Service\)
+
+The EPNS protocol is the first of its kind decentralized defi notification protocol which enables users \(wallet addresses\) to receive notifications.
+
+Using the protocol, any dApp, service or smart contract can send notifications to users\(wallet addresses\) in a platform agnostic way \(mobile, tablet, web, fav. wallets, etc\). _**The DeFi aspect of the protocol also ensures that the user receives and earns from those notifications.**_
 
 Slides: [https://docs.google.com/presentation/d/1hweNz4QSDLdCVWKa3T8lw-ZwmhhDuPnhim-bgeUsIks/edit\#slide=id.g85c3ec45e5\_1\_38](https://docs.google.com/presentation/d/1hweNz4QSDLdCVWKa3T8lw-ZwmhhDuPnhim-bgeUsIks/edit#slide=id.g85c3ec45e5_1_38)
 
@@ -16,7 +24,7 @@ Live Demo: [https://www.youtube.com/watch?v=uI-YhyUyMgw](https://www.youtube.com
 
 Idea behind EPNS is to expand on and integrate existing ways by which a user can be reached out to by different dApp owners, smart contracts, etc. The EPNS service can be used in a variety of ways:
 
-* It can be used to relay important loan liquidation, funds running out, debt positions notifices to a specific user in \#DeFi
+* It can be used to relay important loan liquidation, funds running out, debt positions notifies to a specific user in \#DeFi
 * It can be used to inform users of important upcoming events, notifications, etc of specific dApps \(via App Owners\)
 * It can be further enhanced to convey push notifications that act as security mechanisms \(for example: a Trusted App Owner group is subscribed by all exchanges, the addresses relayed by this app owner in specific format can automatically blacklist those addresses out\)
 * It can potentially be used by Ethereum itself for major announcements like launching of Ethereum 2.0, notifications to miners for any upcoming fork, etc

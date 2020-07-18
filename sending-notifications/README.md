@@ -1,7 +1,7 @@
 ---
 description: >-
-  The developer page describes how notifications can be sent out by a dApp,
-  service or a smart contract by interacting with our protocol.
+  Describes how notifications can be sent out by a dApp, service or a smart
+  contract by interacting with our protocol.
 ---
 
 # Sending Notifications

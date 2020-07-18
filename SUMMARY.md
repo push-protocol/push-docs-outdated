@@ -1,6 +1,6 @@
 # Table of contents
 
-* [README](README.md)
+* [Ethereum Push Notification Service](README.md)
 * [Notification Payload Types](supported-notification-payload-types.md)
 * [Sending Notifications](sending-notifications/README.md)
   * [dApp / Serverless workflow](sending-notifications/dapp-serverless-workflow.md)

@@ -6,7 +6,7 @@ description: >-
 
 # Notification Payload Types
 
-## Payload Types
+## Payload Description
 
 Ethereum Push Notification Service supports a variety of payload types and the list is ever expanding. 
 
@@ -14,14 +14,32 @@ Ethereum Push Notification Service supports a variety of payload types and the l
 The JSON Payload can differ with payload types ensuring flexibility of the content, data, storage interpretation and delivery.
 {% endhint %}
 
+{% hint style="info" %}
+Recommend to interface with **EPNS JS Library** for dApp / Serverless / Server flow to abstract the logic required to create notification payload.
+{% endhint %}
+
 | Payload Variable | Description |
 | :--- | :--- |
-| **notification**  | Represents the notification typically delivered on the home screen of the platform \(mobile, tablet, web, etc\), the icon of the channel is automatically added to outline where the notification is coming from. |
-| title | The title of the message displayed on the screen, this differs from the **data json** because the title while transforming the payload can be different than the title presented. For example, secret notification title are always transformed to say **Channel has sent you a secret notification** |
-| body | The body of the message displayed on the screen, this differs from the **data json** because the title while transforming the payload can be different than the title presented. For example, secret notification body are always transformed to say **Please open the dApp / app to view your notification** |
-| **data** | The data the notification will carry, this allows the notication to transform |
+| **notification**  | \[Required\] Represents the notification typically delivered on the home screen of the platform \(mobile, tablet, web, etc\), the icon of the channel is automatically added to outline where the notification is coming from. |
+| title | \[Required\] The title of the message displayed on the screen, this differs from the **data json** because the title while transforming the payload can be different than the title presented. For example, secret notification title are always transformed to say **Channel has sent you a secret notification.** |
+| body | \[Required\] The body of the message displayed on the screen, this differs from the **data json** because the title while transforming the payload can be different than the title presented. For example, secret notification body are always transformed to say **Please open the dApp / app to view your notification.** |
+| **data** | \[Optional\] The data present here forms the visual **feedBox** for the user. The data the notification will carry, this allows the notification to transform according the the payload type of the user and the content it carries on the frontend of the platform / app / dApp / wallet that want to support this feature. |
+| type | \[Required\] Each payload has a type which tells how the data should be interpreted, this type is mirrored on the protocol function call as well.  |
+| secret | \[Optional\] is required for certain payload types to decrypt the data |
+| asub | \[Optional\] is the subject shown in the feed item |
+| amsg | \[Optional\] is the message shown in the feed item, has rich text formatting |
+| acta | \[Optional\] is the call to action of that feed item |
+| aimg | \[Optional\] is the image shown in the feed item, this field is also capable of carrying **youtube** links |
+| atime | \[Optional\] time in epoch when the notification should be displayed, if present, the frontend should respect this field and delay the notification till the schedule is reached. if the time is before the current time, the notification is treated as to be dispatched and displayed immediately |
+| **recipients** | \[Optional\] When present with appropriate payload type allows notification to delivered to many subscribers \(but not all subscriber\) of that channel |
 
-### Broadcast Notification
+{% hint style="info" %}
+If no **data** is carried in the **payload** \(or only **atime** is carried\), it is assumed to be a notification is not important to appear in the **feedBox** of the user.
+{% endhint %}
+
+## Payload Types
+
+### Broadcast Payload \(Type 1\)
 
 Broadcast notification goes to all subscriber of a channel, the notification payload in this case is not encrypted.
 
@@ -35,14 +53,15 @@ Broadcast notification goes to all subscriber of a channel, the notification pay
     "type": "1",
     "secret": "",
     "asub": "[Optional] The subject of the message displayed inside app (80 Chars)",
-    "amsg": "The intended message displayed inside app (500 Chars)",
+    "amsg": "[Optional] The intended message displayed inside app (500 Chars)",
     "acta": "[Optional] The cta link parsed inside the app",
-    "aimg": "[Optional] The image url or youtube url which is shown inside the app"
+    "aimg": "[Optional] The image url or youtube url which is shown inside the app",
+    "atime": "[Optional] Epoch time for the notification to be shown or dispatch"
   }
 }
 ```
 
-### Secret Notification
+### Secret Payload \(Type 2\)
 
 Secret notifications are intended to be delivered to one subscriber of the channel, these are encrypted using ECIES\(Elliptic Curve Cryptography\) and AES\(Advanced Encryption Standard\). The secret which is generated by the channel using whatever means they prefer should be kept to 15 characters or less, this secret \(plain version\) uses AES to encrypt the fields: **asub, amsg, acta, aimg**.
 
@@ -58,9 +77,10 @@ The rationale behind using ECIES with AES is to ensure that the payload is not o
     "type": "2",
     "secret": "No more than 15 characters, encrypted using public key of the intended recipient",
     "asub": "encrypted by secret using AES | [Optional] The subject of the message displayed inside app (80 Chars)",
-    "amsg": "encrypted by secret using AES | The intended message displayed inside app (500 Chars)",
+    "amsg": "encrypted by secret using AES | [Optional] The intended message displayed inside app (500 Chars)",
     "acta": "encrypted by secret using AES | [Optional] The cta link parsed inside the app",
-    "aimg": "encrypted by secret using AES | [Optional] The image url which is shown inside the app"
+    "aimg": "encrypted by secret using AES | [Optional] The image url which is shown inside the app",
+    "atime": "[Optional] Epoch time for the notification"
   }
 }
 ```
@@ -83,7 +103,8 @@ Why not just use ECIES? ECIES increases the length of the cipher text and hence 
     "asub": "The Great Renewal: Your ENS Domain has expired and someone is about to get them",
     "amsg": "[d:ENS] domains from 2017 that have expired.\n\nGo check your [b:@ensdomains] right now and renew your accounts.",
     "acta": "https://ens.domains/",
-    "aimg": "https://i.ibb.co/WKNVN9y/enssamplemsgimg.jpg"
+    "aimg": "https://i.ibb.co/WKNVN9y/enssamplemsgimg.jpg",
+    "atime": "1595083821"
   }
 }
 ```
@@ -106,10 +127,115 @@ Why not just use ECIES? ECIES increases the length of the cipher text and hence 
     "asub": "U2FsdGVkX181J09umWprAgmLOaDyZXojQjLPlJ31G0LDgXHBgnNsFEOKgjqhKJ2vWaPP5Xmt8sIQLmB3YYkjQO1LhrV7sr0FDlwqjLhSimxmI1EnjOdEHyiE1RO7LV0O",
     "amsg": "U2FsdGVkX18J7Myet9yljBLtNMpqz86qWgmjrK/9WyP+LD9OVerohkl5jc791UOlU6cV4UFVhdwJHyQSMYNNDPOaJMhxlLF2tL7LIBDeGqPA2AlgWqe2qbF1JC+zjIgBR/+IUfbr0+gz4JUBydK3d1dJGPFYliQTqD7EOjv38No=",
     "acta": "U2FsdGVkX188zXRR3URQR2xedjftDOHD5E3k+ggKe+8F6MxW86464rl6y1ZhX3jY",
-    "aimg": "U2FsdGVkX188AaU187LFzqaibpfoOXb+XkCNbsLpV29CrQOVjC9BfWpxwGXE9Er7OdJ63yblqFYCaqNoGAHCOg=="
+    "aimg": "U2FsdGVkX188AaU187LFzqaibpfoOXb+XkCNbsLpV29CrQOVjC9BfWpxwGXE9Er7OdJ63yblqFYCaqNoGAHCOg==",
+    "atime": "1595083821"
   }
 }
 ```
 
+### Targeted Payload \(Type 3\)
 
+Targeted notification goes to a single subscriber of a channel, the notification payload in this case is not encrypted.
+
+```text
+{
+  "notification": {
+    "title": "The title of your message displayed on screen (50 Chars)",
+    "body": "The intended message displayed on screen (180 Chars)"
+  },
+  "data": {
+    "type": "3",
+    "secret": "",
+    "asub": "[Optional] The subject of the message displayed inside app (80 Chars)",
+    "amsg": "[Optional] The intended message displayed inside app (500 Chars)",
+    "acta": "[Optional] The cta link parsed inside the app",
+    "aimg": "[Optional] The image url or youtube url which is shown inside the app",
+    "atime": "[Optional] Epoch time for the notification to be shown or dispatch"
+  }
+}
+```
+
+## Payload Types in Discussion
+
+The following payloads are in discussion, please follow the appropriate git issue to participate in the discussion.
+
+{% hint style="info" %}
+Want a new payload type required by you or can be useful for EPNS protocol, please open an issue to start the discussion.
+{% endhint %}
+
+### Multi-Targeted Payload \(Type 4\)
+
+Multi-Targeted notification goes to a more than one subscriber of a channel, the notification payload in this case is not encrypted. The total number of subscribers supported is TBA.
+
+```text
+{
+  "notification": {
+    "title": "The title of your message displayed on screen (50 Chars)",
+    "body": "The intended message displayed on screen (180 Chars)"
+  },
+  "data": {
+    "type": "4",
+    "secret": "",
+    "asub": "[Optional] The subject of the message displayed inside app (80 Chars)",
+    "amsg": "[Optional] The intended message displayed inside app (500 Chars)",
+    "acta": "[Optional] The cta link parsed inside the app",
+    "aimg": "[Optional] The image url or youtube url which is shown inside the app",
+    "atime": "[Optional] Epoch time for the notification to be shown or dispatch"
+  },
+  "recipients": {
+    [0xAb...],
+    ...
+    [0xEb...]
+  }
+}
+```
+
+### Multiplex Payload \(Type 5\)
+
+Multiplex notification goes to a more than one subscriber of a channel, the notification payload in this case depends on the inner payloads defined. The total number of subscribers supported is TBA.
+
+```text
+{
+  "data": {
+    "type": "5",
+    "meta": {
+      {
+        "notification": {
+          "title": "The title of your message displayed on screen (50 Chars)",
+          "body": "The intended message displayed on screen (180 Chars)"
+        },
+        "data": {
+          "type": "3",
+          "secret": "",
+          "asub": "[Optional] The subject of the message displayed inside app (80 Chars)",
+          "amsg": "[Optional] The intended message displayed inside app (500 Chars)",
+          "acta": "[Optional] The cta link parsed inside the app",
+          "aimg": "[Optional] The image url or youtube url which is shown inside the app",
+          "atime": "[Optional] Epoch time for the notification to be shown or dispatch"
+        }
+      },
+      ...
+      {
+        "notification": {
+          "title": "The title of your message displayed on screen (50 Chars)",
+          "body": "The intended message displayed on screen (180 Chars)"
+        },
+        "data": {
+          "type": "2",
+          "secret": "No more than 15 characters, encrypted using public key of the intended recipient",
+          "asub": "encrypted by secret using AES | [Optional] The subject of the message displayed inside app (80 Chars)",
+          "amsg": "encrypted by secret using AES | [Optional] The intended message displayed inside app (500 Chars)",
+          "acta": "encrypted by secret using AES | [Optional] The cta link parsed inside the app",
+          "aimg": "encrypted by secret using AES | [Optional] The image url which is shown inside the app",
+          "atime": "[Optional] Epoch time for the notification"
+        }
+      }
+    }
+  }
+}
+```
+
+{% hint style="info" %}
+Multi-Targeted payload will not be supported with multiplex payload.
+{% endhint %}
 

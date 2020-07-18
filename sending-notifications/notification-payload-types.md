@@ -15,7 +15,7 @@ The JSON Payload can differ with payload types ensuring flexibility of the conte
 {% endhint %}
 
 {% hint style="info" %}
-Recommended to interface with **EPNS JS Library** for dApp / Serverless / Server flow to abstract the logic required to create notification payload.
+Recommend to interface with **EPNS JS Library** for dApp / Serverless / Server flow to abstract the logic required to create notification payload.
 {% endhint %}
 
 | Payload Variable | Description |
@@ -23,15 +23,15 @@ Recommended to interface with **EPNS JS Library** for dApp / Serverless / Server
 | **notification**  | \[Required\] Represents the notification typically delivered on the home screen of the platform \(mobile, tablet, web, etc\), the icon of the channel is automatically added to outline where the notification is coming from. |
 | title | \[Required\] The title of the message displayed on the screen, this differs from the **data json** because the title while transforming the payload can be different than the title presented. For example, secret notification title are always transformed to say **Channel has sent you a secret notification.** |
 | body | \[Required\] The body of the message displayed on the screen, this differs from the **data json** because the title while transforming the payload can be different than the title presented. For example, secret notification body are always transformed to say **Please open the dApp / app to view your notification.** |
-| **data** | \[Optional\] The data field present here forms the visual **feedBox** for the user. The data field the notification will carry, allows the notification to transform according to the payload type of the user and the content it carries on the frontend of the platform / app / dApp / wallet that want to support this feature. |
+| **data** | \[Optional\] The data present here forms the visual **feedBox** for the user. The data the notification will carry, this allows the notification to transform according the the payload type of the user and the content it carries on the frontend of the platform / app / dApp / wallet that want to support this feature. |
 | type | \[Required\] Each payload has a type which tells how the data should be interpreted, this type is mirrored on the protocol function call as well.  |
-| secret | \[Optional\] is required for certain payload types to decrypt the data. |
-| asub | \[Optional\] is the subject shown in the feed item. |
-| amsg | \[Optional\] is the message shown in the feed item, has rich text formatting. |
-| acta | \[Optional\] is the call to action of that feed item. |
-| aimg | \[Optional\] is the image shown in the feed item, this field is also capable of carrying **youtube** links. |
-| atime | \[Optional\] time in epoch when the notification should be displayed, if present, the frontend should respect this field and delay the notification till the schedule is reached. If the time is before the current time, the notification is treated as to be dispatched and displayed immediately. |
-| **recipients** | \[Optional\] When present with appropriate payload type allows notification to delivered to many subscribers \(but not all subscriber\) of that channel. |
+| secret | \[Optional\] is required for certain payload types to decrypt the data |
+| asub | \[Optional\] is the subject shown in the feed item |
+| amsg | \[Optional\] is the message shown in the feed item, has rich text formatting |
+| acta | \[Optional\] is the call to action of that feed item |
+| aimg | \[Optional\] is the image shown in the feed item, this field is also capable of carrying **youtube** links |
+| atime | \[Optional\] time in epoch when the notification should be displayed, if present, the frontend should respect this field and delay the notification till the schedule is reached. if the time is before the current time, the notification is treated as to be dispatched and displayed immediately |
+| **recipients** | \[Optional\] When present with appropriate payload type allows notification to delivered to many subscribers \(but not all subscriber\) of that channel |
 
 {% hint style="info" %}
 If no **data** is carried in the **payload** \(or only **atime** is carried\), it is assumed to be a notification is not important to appear in the **feedBox** of the user.
@@ -241,7 +241,7 @@ Multi-Targeted payload will not be supported with multiplex payload.
 
 ## Protocol Interfacing \(Advanced User\)
 
-All of the payloads are uploaded as JSON format in decentralized storage solutions \(**or in some special future cases, even centralized ones**\). The EPNS JS Library interfaces with Ethereum Push Notification Service protocol and calls:
+All of the payloads are uploaded as JSON format in decentralized storage solutions \(**or in some special future cases, even centralized ones**\), The EPNS JS Library interfaces with Ethereum Push Notification Service protocol and calls:
 
 ```text
 sendNotification(address _recipient, bytes _identity)
@@ -249,11 +249,11 @@ sendNotification(address _recipient, bytes _identity)
 
 | Parameter | Sub Field | Description |
 | :--- | :--- | :--- |
-| **\_recipient** |  | Differs with the payload type, broadcast and special multi payload notifications have the channel address as the recipient address. |
-| **\_identity** |  | The identity field consists of the following parameters joined together with a delimiter. |
-|  | delimiter | The delimiter **+** is used for joining the fields together, this is done to optimize the payload written on chain. |
-|  | pushtype | Indicates service wants to push the notifications out and can in the future be segmented to different platforms push \(i.e. : 1 for every platform, 2 for mobile, 3 for web browsers, etc\). |
-|  | payloadtype | Indicates the payload type which is getting written on chain, **special payload type** means the \_identity field doesn't carry a hash to JSON payload but rather the JSON payload in bytes for the protocol itself. |
+| **\_recipient** |  | Differs with the payload type, broadcast and special multi payload notifications have the channel address as the recipient address |
+| **\_identity** |  | The identity field consists of the following parameters joined together with a delimiter |
+|  | delimiter | The delimiter **+** is used for joining the fields together, this is done to optimize the payload written on chain |
+|  | pushtype | Indicates service wants to push the notifications out and can in the future be segmented to different platforms push \(ie: 1 for every platform, 2 for mobile, 3 for web browsers, etc\). |
+|  | payloadtype | Indicates the payload type which is getting written on chain, **special payload type** means the \_identity field doesn't carry a hash to JSON payload but rather the JSON payload in bytes for the protocol itself |
 |  | payloadhash | Indicates the hash of the payload through which payload data can be obtained, payload type not only indicates the content of notification but also the storage implementation stored. |
 
 {% hint style="success" %}
@@ -261,10 +261,10 @@ Example identity: **1+2+QmcdzjicUnxv8ASKKSgEEYjhK7symwxqDG4BeCS82rdNBk**
 {% endhint %}
 
 {% hint style="info" %}
-**Special payload type** is represent by passing **0 instead of mirrored payload type.**
+**Special payload type** is represent by passing **0 instead of mirrored payload type**
 {% endhint %}
 
 {% hint style="info" %}
-Always recommended to interface with **EPNS JS Library** for abstracting these details out.
+Always recommended to interface with **EPNS JS Library** for abstracting these details out
 {% endhint %}
 

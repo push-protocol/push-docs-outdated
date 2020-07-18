@@ -6,7 +6,7 @@ description: Workflow for sending notification via third party server model
 
 ## Server integration workflow
 
-EPNS allows various ways to integrate the protocol into your service. The following flow shows how your  server can integrate and send notification to the protocol.
+EPNS allows various ways to integrate the protocol into your service. The following flow shows how your server can integrate and send notification to the protocol.
 
 ![](../.gitbook/assets/inputserver.png)
 

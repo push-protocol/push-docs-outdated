@@ -12,7 +12,7 @@ EPNS allows various ways to integrate the protocol into your service. The follow
 
 ### Sending notification via the server
 
-1. Use your internal logic to figure out what notification you want to send \(ie: alerting users on some smart contract event, user actions, movement in their wallets, a podcast or post from your end, etc\).
+1. Use your internal logic to figure out what notification you want to send \(i.e. alerting users on some smart contract event, user actions, movement in their wallets, a podcast or post from your end, etc\).
 2. Form the JSON payload using our JS Library or your which you want to send as notification. Please check [Notification Payload Types](notification-payload-types.md) for supported payload types and their requirements.
 3. Interact with protocol using our JS Library or your own.
 4. That's it, sit back and relax, we will take it on from here.

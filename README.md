@@ -4,7 +4,7 @@ description: This page is outdated and in development
 
 # Ethereum Push Notification Service
 
-{% hint style="info" %}
+{% hint style="danger" %}
 This page is outdated and in development
 {% endhint %}
 

@@ -39,6 +39,22 @@ If no **data** is carried in the **payload** \(or only **atime** is carried\), i
 
 ## Payload Types
 
+### Direct Protocol Payload \(Type 0\)
+
+Direct payload are special payloads meant for sending directly to protocol, the delimiter **+** divides the subject and message which are the only two fields it carries. 
+
+```text
+type+title+body
+```
+
+{% hint style="warning" %}
+It's always recommended to use other payloads for dApp or server interaction. This payload should be used sparingly when it's absolutely necessary. the type here is a special field which is different from the type in identity.
+{% endhint %}
+
+{% hint style="info" %}
+Always recommended to interface with **EPNS JS Library** for abstracting these details out.
+{% endhint %}
+
 ### Broadcast Payload \(Type 1\)
 
 Broadcast notification goes to all subscriber of a channel, the notification payload in this case is not encrypted.
@@ -253,15 +269,11 @@ sendNotification(address _recipient, bytes _identity)
 | **\_identity** |  | The identity field consists of the following parameters joined together with a delimiter. |
 |  | delimiter | The delimiter **+** is used for joining the fields together, this is done to optimize the payload written on chain. |
 |  | pushtype | Indicates service wants to push the notifications out and can in the future be segmented to different platforms push \(i.e. : 1 for every platform, 2 for mobile, 3 for web browsers, etc\). |
-|  | payloadtype | Indicates the payload type which is getting written on chain, **special payload type** means the \_identity field doesn't carry a hash to JSON payload but rather the JSON payload in bytes for the protocol itself. |
+|  | payloadtype | Indicates the payload type which is getting written on chain |
 |  | payloadhash | Indicates the hash of the payload through which payload data can be obtained, payload type not only indicates the content of notification but also the storage implementation stored. |
 
 {% hint style="success" %}
 Example identity: **1+2+QmcdzjicUnxv8ASKKSgEEYjhK7symwxqDG4BeCS82rdNBk**
-{% endhint %}
-
-{% hint style="info" %}
-**Special payload type** is represent by passing **0 instead of mirrored payload type.**
 {% endhint %}
 
 {% hint style="info" %}

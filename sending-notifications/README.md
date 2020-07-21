@@ -13,7 +13,7 @@ EPNS uses the following application flow to ensure storage, broadcasting and sen
 ![High Level Application Flow](../.gitbook/assets/highlevel.jpg)
 
 {% hint style="info" %}
- Abstracting the data layer on chain \(directly or indirectly\) ensures notifications are platform agnostic. 
+Abstracting the data layer on chain \(directly or indirectly\) ensures notifications are platform agnostic. 
 {% endhint %}
 
 {% hint style="success" %}

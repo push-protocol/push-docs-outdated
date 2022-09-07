@@ -10,7 +10,7 @@ This page is outdated and in development
 
 ## EPNS \(Ethereum Push Notification Service\)
 
-The EPNS protocol is the first of its kind decentralized defi notification protocol which enables users \(wallet addresses\) to receive notifications.
+The EPNS protocol is the first of its kind decentralized DeFi notification protocol which enables users \(wallet addresses\) to receive notifications.
 
 Using the protocol, any dApp, service or smart contract can send notifications to users\(wallet addresses\) in a platform agnostic way \(mobile, tablet, web, fav. wallets, etc\). _**The DeFi aspect of the protocol also ensures that the user receives and earns from those notifications.**_
 
@@ -22,7 +22,7 @@ Live Demo: [https://www.youtube.com/watch?v=uI-YhyUyMgw](https://www.youtube.com
 
 ## What are the benefits of having EPNS?
 
-Idea behind EPNS is to expand on and integrate existing ways by which a user can be reached out to by different dApp owners, smart contracts, etc. The EPNS service can be used in a variety of ways:
+The idea behind EPNS is to expand on and integrate existing ways by which a user can be reached out to by different dApp owners, smart contracts, etc. The EPNS service can be used in a variety of ways:
 
 * It can be used to relay important loan liquidation, funds running out, debt positions notifies to a specific user in \#DeFi
 * It can be used to inform users of important upcoming events, notifications, etc of specific dApps \(via App Owners\)
@@ -39,8 +39,8 @@ Following definitions are used in the rest of the spec to refer to a particular 
 | Term | Description |
 | :--- | :--- |
 | Contract Owner | The owner of the contract, specifically the address by which the contract is deployed |
-| App Owner | The third party projects, dApps or smart contract, specifically the address which forms their identity as well as the custom opt-in group which the subscribed users will recieve message from |
-| Users | All the users who don't fall in either of the above category |
+| App Owner | The third party projects, dApps or smart contract, specifically the address which forms their identity as well as the custom opt-in group which the subscribed users will receive message from |
+| Users | All the users who don't fall in either of the above categories |
 | App Owner Group | The group which contains subscribed users of a particular App Owner |
 | Subscribed Users | The users who have subscribed to a specific App Owner Group |
 
@@ -56,19 +56,19 @@ For the purpose of explaining above EPNS terms, let's take the example of Youtub
 
 ### Game Theory
 
-Inorder to ensure the proper participation of all players, following game theory is proposed, features marked with indentation will mostly be excluded from MVP:
+In order to ensure the proper participation of all players, following game theory is proposed, features marked with indentation will mostly be excluded from MVP:
 
 * The **contract owner** doesn't have any ability to send message on behalf of **app owners**
 * > The **app owners** might spoof other trusted apps and thus will have to be verified or a spam system developed so that users can mark them as spoof or a similar mechanism
 * The **app owners** need explicit permission from the **users** before messages can be sent to them
 * The **app owners** need to stake some minimum DAI to ensure spam free environment, this is going to be minimal but good enough to ascertain good behavior \(for example: 50 DAI\)
 * The **users** need to transact on blockchain to specifically subscribe or unsubscribe to an **app owner group**, this leads to an incentive issue, ie: why would a user spend gas in most cases?
-* To counter this, The staked DAI from **app owners** can in turn be used as a incentive for **users** to subscribe to the specific **app owner** group
-* This can be done by using service like [**AAVE**](https://app.aave.com/deposit/DAI) to accure interest on the said DAI and distribute it to the subscribed **users** group
+* To counter this, The staked DAI from **app owners** can in turn be used as an incentive for **users** to subscribe to the specific **app owner** group
+* This can be done by using service like [**AAVE**](https://app.aave.com/deposit/DAI) to accrue interest on the said DAI and distribute it to the subscribed **users** group
 * This incentivizes the **users** to spend gas to perform transaction operation of subscribe
 * The **app owners** can stake more DAI if they want to, since the **users** are incentivized to subscribe
 * > The **app owner** can blacklist a certain **user** from their group if they want to
-* The **app owners** can reclaim this DAI back, reclaiming this DAI will also destroy the **app owner group**, a fees of 10 DAI will also be held back for the **contract owner**, the fees is small enough for serious players to not worry about but will act as a further deterrent for bad players
+* The **app owners** can reclaim this DAI back, reclaiming this DAI will also destroy the **app owner group**, a fee of 10 DAI will also be held back for the **contract owner**, the fees is small enough for serious players to not worry about but will act as a further deterrent for bad players
 
 ### Features
 
